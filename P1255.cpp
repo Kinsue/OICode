@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int num[5004][20000];
+int num[5004][2000];
 int len = 1;
 
 void add(int a, int b, int c) {
