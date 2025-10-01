@@ -2,12 +2,14 @@
 using namespace std;
 
 long long n, m, s;
+long long cnt[200005] = {}, sumv[200005] = {};
 vector<int> w, v, L, R;
 
 long long check(int W) {
 
-  static long long cnt[200005], sumv[200005];
-  cnt[0] = sumv[0] = 0;
+  memset(cnt, 0, sizeof(cnt));
+  memset(sumv, 0, sizeof(sumv));
+
   for (int i = 1; i <= n; i++) {
     if (w[i] >= W) {
       cnt[i] = cnt[i - 1] + 1;
@@ -30,9 +32,9 @@ long long check(int W) {
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(nullptr);
+  cout.tie(nullptr);
 
   cin >> n >> m >> s;
-
   w.resize(n + 1);
   v.resize(n + 1);
   L.resize(m);
@@ -46,15 +48,18 @@ int main() {
   int Lb = 1, Rb = 1000000 + 1;
   long long ans = LLONG_MAX;
 
-  while (Rb - Lb >= 0) {
+  while (Rb - Lb > 0) {
+
     int mid = Lb + (Rb - Lb) / 2;
     long long val = check(mid);
-    ans = min(ans, llabs(s - val));
+
     if (val >= s) {
       Lb = mid + 1;
     } else {
-      Rb = mid - 1;
+      Rb = mid;
     }
+
+    ans = min(ans, abs(s - val));
   }
 
   cout << ans << "\n";
